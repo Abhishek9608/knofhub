@@ -74,3 +74,28 @@ font-size: 10.8543px;
 line-height: 16px;
 color: #141B25;
 }
+.createBorder{
+    height: 1px;
+}
+
+.loadButton{
+left: 649px;
+top: 2067px;
+font-family: 'Prompt';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+padding: 15px 25px;
+border: 1px solid #CCCCCC;
+border-radius: 35px;
+color:#000
+}
+
+.loadMoreContainer{
+    margin-top: 50px;
+}
+
+.dropdown-toggle::after {
+    margin-left: 5.255em;
+}
+

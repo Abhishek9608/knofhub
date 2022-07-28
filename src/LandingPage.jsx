@@ -9,10 +9,11 @@ export default function LandingPage() {
   const [eventData , setEventData] = useState();
   const [inputValue , setInputValue] = useState("");
   const [pastEvent , setPastEvent] = useState("true");
+  const [limit , setLimit] = useState(10);
 
 
   useEffect(() => {
-    fetch(`https://manage-api.konfhub.com/hosted-events?limit=8&search_query=${inputValue}&past_events=${pastEvent}`)
+    fetch(`https://manage-api.konfhub.com/hosted-events?limit=${limit}&search_query=${inputValue}&past_events=${pastEvent}`)
       .then((response) => response?.json())
       .then((result) => {
          setEventData(result);
@@ -21,7 +22,7 @@ export default function LandingPage() {
         console.log(error)
       })
 
-  },[inputValue , pastEvent]);
+  },[inputValue , pastEvent , limit]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -29,6 +30,10 @@ export default function LandingPage() {
 
   const handleEvent = (EventType) => {
     setPastEvent(EventType)
+  }
+
+  const handleLoadMore = () => {
+    setLimit(limit + 12)
   }
 
   return (
@@ -43,12 +48,12 @@ export default function LandingPage() {
   <div className='row  mt-3' >
     <div className='col mainNav' >
       <div className='row'>
-        <div className='col-8' >
+        <div className='col-lg-8 col-xs-12' >
         <div className='mainNavHeading mt-5 mx-5' >Events</div>
         <div className='mx-5' >Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra</div>
       </div>
-      <div className='col-4' >
-      <img src={Event}  className="eventLogo mt-3" alt="Events"/>
+      <div className='col-lg-4 col-xs-12' >
+      <img src={Event}  className="eventLogo mt-5" alt="Events"/>
      </div>
       </div>
     </div>
@@ -57,12 +62,12 @@ export default function LandingPage() {
   <div className=' row inputContent align-items-center' >
     <div className='col-7' >
       <span>Search</span>
-    <input type="name" class="form-control" onChange={handleChange} />
+    <input type="name" class="form-control border" onChange={handleChange} />
     </div>
     <div className='col-5' >
     <span>Past Event</span>
     <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn border w-100  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
     Select Type
   </button>
   <ul class="dropdown-menu">
@@ -85,9 +90,9 @@ export default function LandingPage() {
         <div class="card-body">
         <div class="cardHeading mt-3">{item.name}</div>
         <div className='row  mt-2 align-items-center justify-content-center' >
-          <div className='col-6 p-0 cardStatus' >
+          <div className='col-6 cardStatus' >
             Raddison Blue</div>
-          <div className='col-6 p-0 cardStatus' > {item.is_free === "ture" ? "Free" : "paid"} | {item.is_virtual === "true" ? "Online" : "Offline"}</div>
+          <div className='col-6 cardStatus' > {item.is_free === "ture" ? "Free" : "paid"} | {item.is_virtual === "true" ? "Online" : "Offline"}</div>
         </div>
         </div>
       </div>
@@ -95,6 +100,12 @@ export default function LandingPage() {
 
       ))
     }
+  </div>
+
+  <div className='row loadMoreContainer  align-items-center' >
+    <div className='col-5 border-top  createBorder'  ></div>
+    <div className='col-2 d-flex justify-content-center' ><button type="button" class="btn btn-outline-secondary loadButton  " onClick={handleLoadMore} > Load More</button></div>
+    <div className='col-5 border-top createBorder' ></div>
   </div>
 </div>
     </div>
