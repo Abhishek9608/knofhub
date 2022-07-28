@@ -7,11 +7,12 @@ import CardImg from "./CardImg.png"
 
 export default function LandingPage() {
   const [eventData , setEventData] = useState();
+  const [inputValue , setInputValue] = useState("");
+  const [pastEvent , setPastEvent] = useState("true");
 
 
   useEffect(() => {
-
-    fetch(`https://manage-api.konfhub.com/hosted-events?limit=8`)
+    fetch(`https://manage-api.konfhub.com/hosted-events?limit=8&search_query=${inputValue}&past_events=${pastEvent}`)
       .then((response) => response?.json())
       .then((result) => {
          setEventData(result);
@@ -20,9 +21,15 @@ export default function LandingPage() {
         console.log(error)
       })
 
-  },[]);
+  },[inputValue , pastEvent]);
 
-  console.log(eventData)
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  }
+
+  const handleEvent = (EventType) => {
+    setPastEvent(EventType)
+  }
 
   return (
     <div className='wholeContent' > 
@@ -50,18 +57,17 @@ export default function LandingPage() {
   <div className=' row inputContent align-items-center' >
     <div className='col-7' >
       <span>Search</span>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+    <input type="name" class="form-control" onChange={handleChange} />
     </div>
     <div className='col-5' >
     <span>Past Event</span>
     <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown
+    Select Type
   </button>
   <ul class="dropdown-menu">
-    <li><button class="dropdown-item" type="button">Action</button></li>
-    <li><button class="dropdown-item" type="button">Another action</button></li>
-    <li><button class="dropdown-item" type="button">Something else here</button></li>
+    <li><button class="dropdown-item" type="button" onClick={() => handleEvent("true")} >True</button></li>
+    <li><button class="dropdown-item" type="button" onClick={() => handleEvent("false")}>False</button></li>
   </ul>
 </div>
     </div>
